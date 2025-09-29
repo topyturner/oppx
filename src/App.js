@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Send, Home, MessageCircle, Bell, User, Users, Image, Video, Smile, ThumbsUp, MessageSquare, Share2, Settings, Search, Plus, X, Heart, Bookmark, TrendingUp, Globe } from 'lucide-react';
-
-const OperationX = () => {
+import { Send, Home, MessageCircle, Bell, User, Users, Image, Video, Smile, ThumbsUp, MessageSquare, Share2, Settings, Search, Plus, X, Bookmark, Globe } from 'lucide-react';const OperationX = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [posts, setPosts] = useState([
     {
