@@ -1,5 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Send, Home, MessageCircle, Bell, User, Users, Image, Video, Smile, ThumbsUp, MessageSquare, Share2, Settings, Search, Plus, X, Bookmark, Globe } from 'lucide-react';const OperationX = () => {
+
+import React, { useState, useRef, useEffect } from 'react';
+import { Send, Home, MessageCircle, Bell, User, Users, Image, Video, Smile, ThumbsUp, MessageSquare, Share2, Settings, Search, Plus, X, Bookmark, Globe } from 'lucide-react';
+
+const OperationX = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [posts, setPosts] = useState([
     {
@@ -28,7 +31,7 @@ import { Send, Home, MessageCircle, Bell, User, Users, Image, Video, Smile, Thum
     }
   ]);
   
-  const [conversations, setConversations] = useState([
+  const [conversations] = useState([
     {
       id: 1,
       name: 'Emma Wilson',
@@ -62,7 +65,7 @@ import { Send, Home, MessageCircle, Bell, User, Users, Image, Video, Smile, Thum
   const [messages, setMessages] = useState({
     1: [
       { id: 1, text: 'Hey! How are you?', sender: 'them', timestamp: '10:30 AM' },
-      { id: 2, text: 'I\'m good! Working on the new project.', sender: 'me', timestamp: '10:32 AM' },
+      { id: 2, text: 'I am good! Working on the new project.', sender: 'me', timestamp: '10:32 AM' },
       { id: 3, text: 'That sounds exciting! Need any help?', sender: 'them', timestamp: '10:33 AM' },
       { id: 4, text: 'See you tomorrow!', sender: 'them', timestamp: '10:35 AM' }
     ],
@@ -107,11 +110,6 @@ import { Send, Home, MessageCircle, Bell, User, Users, Image, Video, Smile, Thum
       };
       setMessages({ ...messages, [activeChat]: [...messages[activeChat], newMsg] });
       setNewMessage('');
-      
-      const updatedConvs = conversations.map(c => 
-        c.id === activeChat ? { ...c, lastMessage: newMessage, timestamp: 'Just now' } : c
-      );
-      setConversations(updatedConvs);
     }
   };
 
@@ -153,7 +151,6 @@ import { Send, Home, MessageCircle, Bell, User, Users, Image, Video, Smile, Thum
 
   return (
     <div className="flex flex-col h-screen bg-gray-50">
-      {/* Header */}
       <div className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -236,11 +233,9 @@ import { Send, Home, MessageCircle, Bell, User, Users, Image, Video, Smile, Thum
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="flex-1 overflow-hidden">
         {activeTab === 'home' && (
           <div className="max-w-2xl mx-auto p-4 h-full overflow-y-auto">
-            {/* Create Post */}
             <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-xl">
@@ -250,7 +245,7 @@ import { Send, Home, MessageCircle, Bell, User, Users, Image, Video, Smile, Thum
                   onClick={() => setShowCreatePost(true)}
                   className="flex-1 text-left px-4 py-2 bg-gray-100 rounded-full text-gray-500 hover:bg-gray-200 transition-colors"
                 >
-                  What's on your mind?
+                  What is on your mind?
                 </button>
               </div>
               <div className="flex items-center gap-4 mt-3 pt-3 border-t border-gray-200">
@@ -265,7 +260,6 @@ import { Send, Home, MessageCircle, Bell, User, Users, Image, Video, Smile, Thum
               </div>
             </div>
 
-            {/* Create Post Modal */}
             {showCreatePost && (
               <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
                 <div className="bg-white rounded-lg max-w-lg w-full">
@@ -279,7 +273,7 @@ import { Send, Home, MessageCircle, Bell, User, Users, Image, Video, Smile, Thum
                     <textarea
                       value={newPost}
                       onChange={(e) => setNewPost(e.target.value)}
-                      placeholder="What's on your mind?"
+                      placeholder="What is on your mind?"
                       className="w-full h-32 p-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
                     />
                     <button
@@ -294,7 +288,6 @@ import { Send, Home, MessageCircle, Bell, User, Users, Image, Video, Smile, Thum
               </div>
             )}
 
-            {/* Stories */}
             <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
               <div className="flex gap-3 overflow-x-auto pb-2">
                 <div className="flex-shrink-0 w-28">
@@ -317,7 +310,6 @@ import { Send, Home, MessageCircle, Bell, User, Users, Image, Video, Smile, Thum
               </div>
             </div>
 
-            {/* Posts Feed */}
             <div className="space-y-4">
               {posts.map(post => (
                 <div key={post.id} className="bg-white rounded-lg shadow-sm">
@@ -391,7 +383,6 @@ import { Send, Home, MessageCircle, Bell, User, Users, Image, Video, Smile, Thum
 
         {activeTab === 'messages' && (
           <div className="flex h-full">
-            {/* Conversations List */}
             <div className="w-80 bg-white border-r border-gray-200 flex flex-col">
               <div className="p-4 border-b border-gray-200">
                 <h2 className="text-xl font-semibold">Messages</h2>
@@ -430,7 +421,6 @@ import { Send, Home, MessageCircle, Bell, User, Users, Image, Video, Smile, Thum
               </div>
             </div>
 
-            {/* Chat Area */}
             <div className="flex-1 flex flex-col bg-white">
               {activeChat ? (
                 <>
@@ -562,81 +552,60 @@ import { Send, Home, MessageCircle, Bell, User, Users, Image, Video, Smile, Thum
         {activeTab === 'profile' && (
           <div className="max-w-4xl mx-auto p-4 h-full overflow-y-auto">
             <div className="bg-white rounded-lg shadow-sm overflow-hidden mb-4">
-              {/* Cover Photo */}
               <div className="h-48 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
               
-              {/* Profile Info */}
               <div className="px-6 pb-6">
                 <div className="flex items-end justify-between -mt-16 mb-4">
                   <div className="flex items-end gap-4">
-                    <div className="w-32 h-32 rounded-full border-4 border-white bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-5xl shadow-lg">
-                      😊
-                    </div>
-                    <div className="mb-2">
-                      <h2 className="text-2xl font-bold">Your Name</h2>
-                      <p className="text-gray-600">500 friends</p>
-                    </div>
-                  </div>
-                  <button className="mb-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
-                    Edit Profile
-                  </button>
-                </div>
-
-                {/* Profile Stats */}
-                <div className="grid grid-cols-4 gap-4 py-4 border-t border-b border-gray-200">
-                  <div className="text-center">
-                    <p className="text-2xl font-bold text-blue-600">256</p>
-                    <p className="text-sm text-gray-600">Posts</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-2xl font-bold text-purple-600">500</p>
-                    <p className="text-sm text-gray-600">Friends</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-2xl font-bold text-pink-600">1.2K</p>
-                    <p className="text-sm text-gray-600">Followers</p>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-2xl font-bold text-green-600">89</p>
-                    <p className="text-sm text-gray-600">Following</p>
-                  </div>
-                </div>
-
-                {/* Bio */}
-                <div className="mt-4">
-                  <h3 className="font-semibold mb-2">About</h3>
-                  <p className="text-gray-700">Digital creator | Tech enthusiast | Coffee lover ☕</p>
-                  <p className="text-gray-700 mt-2">📍 San Francisco, CA</p>
-                  <p className="text-gray-700">🎂 Joined January 2020</p>
-                </div>
+                    <div className="w-32 h-32 rounded-full border-4
+          <div className="grid grid-cols-4 gap-4 py-4 border-t border-b border-gray-200">
+              <div className="text-center">
+                <p className="text-2xl font-bold text-blue-600">256</p>
+                <p className="text-sm text-gray-600">Posts</p>
+              </div>
+              <div className="text-center">
+                <p className="text-2xl font-bold text-purple-600">500</p>
+                <p className="text-sm text-gray-600">Friends</p>
+              </div>
+              <div className="text-center">
+                <p className="text-2xl font-bold text-pink-600">1.2K</p>
+                <p className="text-sm text-gray-600">Followers</p>
+              </div>
+              <div className="text-center">
+                <p className="text-2xl font-bold text-green-600">89</p>
+                <p className="text-sm text-gray-600">Following</p>
               </div>
             </div>
 
-            {/* Recent Activity */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h3 className="text-xl font-semibold mb-4">Recent Activity</h3>
-              <div className="space-y-4">
-                {[
-                  { action: 'Posted a new photo', time: '2 hours ago', icon: '📸' },
-                  { action: 'Liked a post by Sarah Johnson', time: '5 hours ago', icon: '❤️' },
-                  { action: 'Commented on Mike Chen\'s post', time: '1 day ago', icon: '💬' },
-                  { action: 'Updated profile picture', time: '3 days ago', icon: '🖼️' }
-                ].map((activity, idx) => (
-                  <div key={idx} className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
-                    <div className="text-3xl">{activity.icon}</div>
-                    <div className="flex-1">
-                      <p className="font-medium">{activity.action}</p>
-                      <p className="text-sm text-gray-500">{activity.time}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+            <div className="mt-4">
+              <h3 className="font-semibold mb-2">About</h3>
+              <p className="text-gray-700">Digital creator | Tech enthusiast | Coffee lover ☕</p>
+              <p className="text-gray-700 mt-2">📍 San Francisco, CA</p>
+              <p className="text-gray-700">🎂 Joined January 2020</p>
             </div>
           </div>
-        )}
-      </div>
-    </div>
-  );
-};
+        </div>
 
-export default OperationX;
+        <div className="bg-white rounded-lg shadow-sm p-6">
+          <h3 className="text-xl font-semibold mb-4">Recent Activity</h3>
+          <div className="space-y-4">
+            {[
+              { action: 'Posted a new photo', time: '2 hours ago', icon: '📸' },
+              { action: 'Liked a post by Sarah Johnson', time: '5 hours ago', icon: '❤️' },
+              { action: 'Commented on Mike Chen post', time: '1 day ago', icon: '💬' },
+              { action: 'Updated profile picture', time: '3 days ago', icon: '🖼️' }
+            ].map((activity, idx) => (
+              <div key={idx} className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
+                <div className="text-3xl">{activity.icon}</div>
+                <div className="flex-1">
+                  <p className="font-medium">{activity.action}</p>
+                  <p className="text-sm text-gray-500">{activity.time}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
+</div>
