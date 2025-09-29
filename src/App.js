@@ -79,7 +79,7 @@ import { Send, Home, MessageCircle, Bell, User, Users, Image, Video, Smile, Thum
   const [newMessage, setNewMessage] = useState('');
   const [newPost, setNewPost] = useState('');
   const [showCreatePost, setShowCreatePost] = useState(false);
-  const [notifications, setNotifications] = useState([
+  const [notifications] = useState([
     { id: 1, type: 'like', user: 'Alex Turner', content: 'liked your post', timestamp: '5m ago', read: false },
     { id: 2, type: 'comment', user: 'Jessica Lee', content: 'commented on your post', timestamp: '15m ago', read: false },
     { id: 3, type: 'friend', user: 'Tom Harris', content: 'sent you a friend request', timestamp: '1h ago', read: true }
